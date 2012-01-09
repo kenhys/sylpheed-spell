@@ -1,0 +1,223 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-10 03:06+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: sylspell.h:34
+msgid "Sylspell - spell check plug-in for Sylpheed"
+msgstr ""
+
+#: sylspell.h:35
+msgid "spell check plug-in for Sylpheed"
+msgstr ""
+
+#: sylspell.c:64
+msgid ""
+"SylSpell is distributed under GPL license.\n"
+"\n"
+"Copyright (C) 2012 HAYASHI Kentaro <kenhys@gmail.com>\n"
+"sylspell contains following resource as statusbar icon.\n"
+"\n"
+"\n"
+"Silk icon set 1.3: Copyright (C) Mark James\n"
+"Licensed under a Creative Commons Attribution 2.5 License.\n"
+"http://www.famfamfam.com/lab/icons/silk/\n"
+"\n"
+msgstr ""
+
+#: sylspell.c:89
+msgid "SylSpell Settings [sylspell]"
+msgstr ""
+
+#: sylspell.c:127 sylspell.c:158
+msgid "SylSpell is disabled."
+msgstr ""
+
+#: sylspell.c:143
+msgid "SylSpell is enabled. Click the icon to disable plugin."
+msgstr ""
+
+#: sylspell.c:152
+msgid "SylSpell is enabled."
+msgstr ""
+
+#: sylspell.c:331
+msgid "Sylspell Settings"
+msgstr ""
+
+#: sylspell.c:345 sylspell.c:354
+msgid "SylSpell"
+msgstr ""
+
+#: sylspell.c:345
+msgid "SylSpell plugin is enabled."
+msgstr ""
+
+#: sylspell.c:351
+msgid "Sylspell is enabled. Click the icon to disable plugin."
+msgstr ""
+
+#: sylspell.c:354
+msgid "SylSpell plugin is disabled."
+msgstr ""
+
+#: sylspell.c:360
+msgid "SylSpell is disabled. Click the icon to enable plugin."
+msgstr ""
+
+#: sylspell.c:373
+msgid "spell check"
+msgstr ""
+
+#: sylspell.c:375
+msgid "spell check content of your mail"
+msgstr ""
+
+#: sylspell.c:507
+msgid "Startup Option"
+msgstr ""
+
+#: sylspell.c:511
+msgid "Enable plugin on startup."
+msgstr ""
+
+#: sylspell.c:514
+msgid "Enable loading dictionary on startup."
+msgstr ""
+
+#: sylspell.c:517
+msgid "Enable spell checking before sending mail."
+msgstr ""
+
+#: sylspell.c:520
+msgid "General"
+msgstr ""
+
+#: sylspell.c:534
+msgid "Application/Service"
+msgstr ""
+
+#: sylspell.c:538
+msgid "Hunspell"
+msgstr ""
+
+#: sylspell.c:539
+msgid "Aspell"
+msgstr ""
+
+#: sylspell.c:540 sylspell.c:667
+msgid "Yahoo! JAPAN Kousei"
+msgstr ""
+
+#: sylspell.c:584
+msgid "Yahoo JAPAN Application ID"
+msgstr ""
+
+#: sylspell.c:587
+msgid "Application ID:"
+msgstr ""
+
+#: sylspell.c:596
+msgid "Filter group"
+msgstr ""
+
+#: sylspell.c:597 sylspell.c:683
+msgid "Point out misspelling, not proper expression."
+msgstr ""
+
+#: sylspell.c:598 sylspell.c:684
+msgid "Point out using simple English."
+msgstr ""
+
+#: sylspell.c:599 sylspell.c:685
+msgid "Point out how to improve your sentenses."
+msgstr ""
+
+#: sylspell.c:608
+msgid "No filter"
+msgstr ""
+
+#: sylspell.c:609
+msgid "Ignore misspelling."
+msgstr ""
+
+#: sylspell.c:610
+msgid "Ignore misuse word."
+msgstr ""
+
+#: sylspell.c:611
+msgid "Ignore attention needed words."
+msgstr ""
+
+#: sylspell.c:612
+msgid "Ignore unpleasant words."
+msgstr ""
+
+#: sylspell.c:613
+msgid "Ignore OS depends words."
+msgstr ""
+
+#: sylspell.c:614
+msgid "Ignore a foreign place name."
+msgstr ""
+
+#: sylspell.c:615
+msgid "Ignore a proper noun."
+msgstr ""
+
+#: sylspell.c:616
+msgid "Ignore Jinmei words."
+msgstr ""
+
+#: sylspell.c:617
+msgid "Ignore RANUKI words."
+msgstr ""
+
+#: sylspell.c:618
+msgid "Ignore a phonetic equivalent."
+msgstr ""
+
+#: sylspell.c:619
+msgid "Ignore non starndard words."
+msgstr ""
+
+#: sylspell.c:620
+msgid "Ignore used characters."
+msgstr ""
+
+#: sylspell.c:621
+msgid "Ignore alternative used characters."
+msgstr ""
+
+#: sylspell.c:622
+msgid "Ignore a double negative expression."
+msgstr ""
+
+#: sylspell.c:623
+msgid "Ignore a particle."
+msgstr ""
+
+#: sylspell.c:624
+msgid "Ignore verbosity words."
+msgstr ""
+
+#: sylspell.c:625
+msgid "Ignore abbr words."
+msgstr ""
+
+#: sylspell.c:723
+msgid "About"
+msgstr ""

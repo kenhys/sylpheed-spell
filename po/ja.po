@@ -1,0 +1,229 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-10 03:06+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: HAYASHI Kentaro <kenhys@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: sylspell.h:34
+msgid "Sylspell - spell check plug-in for Sylpheed"
+msgstr "SylSpell - スペルチェックプラグイン for Sylpheed"
+
+#: sylspell.h:35
+msgid "spell check plug-in for Sylpheed"
+msgstr "スペルチェックプラグイン for Sylpheed"
+
+#: sylspell.c:64
+msgid ""
+"SylSpell is distributed under GPL license.\n"
+"\n"
+"Copyright (C) 2012 HAYASHI Kentaro <kenhys@gmail.com>\n"
+"sylspell contains following resource as statusbar icon.\n"
+"\n"
+"\n"
+"Silk icon set 1.3: Copyright (C) Mark James\n"
+"Licensed under a Creative Commons Attribution 2.5 License.\n"
+"http://www.famfamfam.com/lab/icons/silk/\n"
+"\n"
+msgstr ""
+
+#: sylspell.c:89
+msgid "SylSpell Settings [sylspell]"
+msgstr "SylSpell プラグイン設定 [sylspell]"
+
+#: sylspell.c:127 sylspell.c:158
+msgid "SylSpell is disabled."
+msgstr "SylSpellは無効です。"
+
+#: sylspell.c:143
+msgid "SylSpell is enabled. Click the icon to disable plugin."
+msgstr ""
+"SylSpellが有効化されました。無効にするにはアイコンをクリックしてください。"
+
+#: sylspell.c:152
+msgid "SylSpell is enabled."
+msgstr "SylSpellが有効です。"
+
+#: sylspell.c:331
+msgid "Sylspell Settings"
+msgstr "SylSpell設定"
+
+#: sylspell.c:345 sylspell.c:354
+msgid "SylSpell"
+msgstr ""
+
+#: sylspell.c:345
+#, fuzzy
+msgid "SylSpell plugin is enabled."
+msgstr "SylSpellプラグインが有効です。"
+
+#: sylspell.c:351
+msgid "Sylspell is enabled. Click the icon to disable plugin."
+msgstr ""
+"SylSpellが有効化されました。無効にするにはアイコンをクリックしてください。"
+
+#: sylspell.c:354
+#, fuzzy
+msgid "SylSpell plugin is disabled."
+msgstr "sylspellプラグインが無効です。"
+
+#: sylspell.c:360
+#, fuzzy
+msgid "SylSpell is disabled. Click the icon to enable plugin."
+msgstr ""
+"SylSpellが無効化されました。有効にするにはアイコンをクリックしてください。"
+
+#: sylspell.c:373
+msgid "spell check"
+msgstr ""
+
+#: sylspell.c:375
+msgid "spell check content of your mail"
+msgstr ""
+
+#: sylspell.c:507
+msgid "Startup Option"
+msgstr ""
+
+#: sylspell.c:511
+msgid "Enable plugin on startup."
+msgstr "起動時に有効化する。"
+
+#: sylspell.c:514
+msgid "Enable loading dictionary on startup."
+msgstr ""
+
+#: sylspell.c:517
+msgid "Enable spell checking before sending mail."
+msgstr ""
+
+#: sylspell.c:520
+msgid "General"
+msgstr "設定"
+
+#: sylspell.c:534
+msgid "Application/Service"
+msgstr "アプリケーション/サービス"
+
+#: sylspell.c:538
+msgid "Hunspell"
+msgstr ""
+
+#: sylspell.c:539
+msgid "Aspell"
+msgstr ""
+
+#: sylspell.c:540 sylspell.c:667
+msgid "Yahoo! JAPAN Kousei"
+msgstr "Yahoo! JAPAN 校正支援"
+
+#: sylspell.c:584
+msgid "Yahoo JAPAN Application ID"
+msgstr "Yahoo! JAPAN アプリケーションID"
+
+#: sylspell.c:587
+msgid "Application ID:"
+msgstr "アプリケーションID:"
+
+#: sylspell.c:596
+msgid "Filter group"
+msgstr "フィルタグループ"
+
+#: sylspell.c:597 sylspell.c:683
+msgid "Point out misspelling, not proper expression."
+msgstr "表記・表現の間違いや不適切な表現に関する指摘"
+
+#: sylspell.c:598 sylspell.c:684
+msgid "Point out using simple English."
+msgstr "わかりやすい表記にするための指摘"
+
+#: sylspell.c:599 sylspell.c:685
+msgid "Point out how to improve your sentenses."
+msgstr "文章をよりよくするための指摘"
+
+#: sylspell.c:608
+msgid "No filter"
+msgstr "フィルタ除外"
+
+#: sylspell.c:609
+msgid "Ignore misspelling."
+msgstr "誤変換を無視"
+
+#: sylspell.c:610
+msgid "Ignore misuse word."
+msgstr "誤用を無視"
+
+#: sylspell.c:611
+msgid "Ignore attention needed words."
+msgstr "使用注意を無視"
+
+#: sylspell.c:612
+msgid "Ignore unpleasant words."
+msgstr "不快語を無視"
+
+#: sylspell.c:613
+msgid "Ignore OS depends words."
+msgstr "機種依存を無視"
+
+#: sylspell.c:614
+msgid "Ignore a foreign place name."
+msgstr "外国地名を無視"
+
+#: sylspell.c:615
+msgid "Ignore a proper noun."
+msgstr "固有名詞を無視"
+
+#: sylspell.c:616
+msgid "Ignore Jinmei words."
+msgstr "人名を無視"
+
+#: sylspell.c:617
+msgid "Ignore RANUKI words."
+msgstr "ら抜きを無視"
+
+#: sylspell.c:618
+msgid "Ignore a phonetic equivalent."
+msgstr "当て字を無視"
+
+#: sylspell.c:619
+msgid "Ignore non starndard words."
+msgstr "表外漢字を無視"
+
+#: sylspell.c:620
+msgid "Ignore used characters."
+msgstr "用字を無視"
+
+#: sylspell.c:621
+msgid "Ignore alternative used characters."
+msgstr "用語言い換えを無視"
+
+#: sylspell.c:622
+msgid "Ignore a double negative expression."
+msgstr "二重否定を無視"
+
+#: sylspell.c:623
+msgid "Ignore a particle."
+msgstr "助詞不足を無視"
+
+#: sylspell.c:624
+msgid "Ignore verbosity words."
+msgstr "冗長表現を無視"
+
+#: sylspell.c:625
+msgid "Ignore abbr words."
+msgstr "略語を無視"
+
+#: sylspell.c:723
+msgid "About"
+msgstr ""
