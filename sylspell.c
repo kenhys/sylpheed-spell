@@ -261,6 +261,15 @@ static void prefs_ok_cb(GtkWidget *widget, gpointer data)
   SET_RC_BOOLEAN(SYLSPELL, "startup", g_opt.startup_flg);
   debug_print("startup:%s\n", g_opt.startup_flg ? "TRUE" : "FALSE");
 
+  gchar *appid = gtk_entry_get_text(GTK_ENTRY(g_opt.jlp_kousei_appid));
+  if (appid != NULL) {
+    g_key_file_set_string(g_opt.rcfile, SYLSPELL_JLP_KOUSEI, "appid", appid);
+  }
+  
+  STORE_TOGGLE_BUTTON("group1", group1);
+  STORE_TOGGLE_BUTTON("group2", group2);
+  STORE_TOGGLE_BUTTON("group3", group3);
+
   STORE_TOGGLE_BUTTON("misspell", misspell);
   STORE_TOGGLE_BUTTON("misuse", misuse);
   STORE_TOGGLE_BUTTON("note", note);
@@ -414,6 +423,38 @@ void compose_destroy_cb(GObject *obj, gpointer compose)
 
 void check_mailcontent_cb(GObject *obj, gpointer data)
 {
+  Compose *compose = (Compose*)data;
+
+  gchar *appid = g_key_file_get_string(g_opt.rcfile, SYLSPELL_JLP_KOUSEI, "appid", NULL);
+  if (appid != NULL) {
+
+    gchar *com = NULL;
+
+    GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+    GtkTextIter tsiter, teiter;
+	buffer = gtk_text_view_get_buffer(text);
+    gtk_text_buffer_get_bounds(buffer, &tsiter, &teiter);
+    gchar *buf = gtk_text_buffer_get_text(buffer,&tsiter, &teiter, FALSE);
+    
+    com = g_strdup_printf("curl --verbose --data 'appid=%s' --data 'sentence=%s' %s",
+                          appid, encode_uri(buf), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
+#if 0
+    com = g_strdup_printf("curl --data 'appid=%s' --data 'sentence=%s' %s",
+                          appid, encode_url(buf), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
+#endif
+    debug_print("UTF-8:%s\n", buf);
+    gchar *uri = g_filename_to_uri(buf, NULL, NULL);
+    if (uri) {
+      debug_print("UTF-8:%s\n", uri);
+    }
+    debug_print("curl command:%s\n", com);
+
+#if 0
+    gchar *result = get_command_output(com);
+    debug_print("result:%s\n", result);
+#endif  
+  }
 }
 
 static gboolean compose_send_cb(GObject *obj, gpointer data,
@@ -594,7 +635,7 @@ static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey)
  */
 static GtkWidget *create_config_jlp_kousei_page(GtkWidget *notebook, GKeyFile *pkey)
 {
-  debug_print("[PLUGIN] create_config_main_page\n");
+  debug_print("[PLUGIN] create_config_jlp_kousei_page\n");
   if (notebook == NULL){
     return NULL;
   }
@@ -689,9 +730,15 @@ static GtkWidget *create_config_jlp_kousei_page(GtkWidget *notebook, GKeyFile *p
   gtk_box_pack_start(GTK_BOX(vbox), grp_align, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), nofil_align, FALSE, FALSE, 0);
   
-  GtkWidget *general_lbl = gtk_label_new(_("Yahoo! JAPAN Kousei"));
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, general_lbl);
-  gtk_widget_show_all(notebook);
+
+  gchar *appid = g_key_file_get_string(g_opt.rcfile, SYLSPELL_JLP_KOUSEI, "appid", NULL);
+  if (appid != NULL) {
+    gtk_entry_set_text(GTK_ENTRY(g_opt.jlp_kousei_appid), appid);
+  }
+  
+  LOAD_TOGGLE_BUTTON("group1", group1);
+  LOAD_TOGGLE_BUTTON("group2", group2);
+  LOAD_TOGGLE_BUTTON("group3", group3);
 
   LOAD_TOGGLE_BUTTON("misspell", misspell);
   LOAD_TOGGLE_BUTTON("misuse", misuse);
@@ -711,6 +758,9 @@ static GtkWidget *create_config_jlp_kousei_page(GtkWidget *notebook, GKeyFile *p
   LOAD_TOGGLE_BUTTON("verbosity", verbosity);
   LOAD_TOGGLE_BUTTON("abbr", abbr);
       
+  GtkWidget *general_lbl = gtk_label_new(_("Yahoo! JAPAN Kousei"));
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, general_lbl);
+  gtk_widget_show_all(notebook);
  return NULL;
 }
 
@@ -722,10 +772,6 @@ static gboolean create_config_myframe (GtkWidget **app_align, GtkWidget **vbox_a
   GtkWidget *app_frm = gtk_frame_new(title);
   GtkWidget *app_frm_align = gtk_alignment_new(0, 0, 1, 1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(app_frm_align), ALIGN_TOP, ALIGN_BOTTOM, ALIGN_LEFT, ALIGN_RIGHT);
-
-  g_opt.jlp_kousei_group1 = gtk_check_button_new_with_label(_("Point out misspelling, not proper expression."));
-  g_opt.jlp_kousei_group2 = gtk_check_button_new_with_label(_("Point out using simple English."));
-  g_opt.jlp_kousei_group3 = gtk_check_button_new_with_label(_("Point out how to improve your sentenses."));
 
   *vbox_app = gtk_vbox_new(FALSE, BOX_SPACE);
 
