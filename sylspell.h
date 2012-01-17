@@ -82,6 +82,8 @@ struct _SylSpellOption {
   GtkWidget *jlp_kousei_verbosity;
   GtkWidget *jlp_kousei_abbr;
 
+  GtkWidget *jlp_kousei_test;
+
   gboolean jlp_kousei_group1_flg;
   gboolean jlp_kousei_group2_flg;
   gboolean jlp_kousei_group3_flg;
@@ -147,6 +149,9 @@ void my_rmdir_list(gchar *path);
 static gint extract_attachment(AttachInfo *ainfo, gchar *dest, gchar *passwd);
 void check_mailcontent_cb(GObject *obj, gpointer data);
 static gboolean create_config_myframe (GtkWidget **app_align, GtkWidget **vbox_app, gchar *title);
+static char *my_g_uri_escape_string(const char *unescaped,
+                                    const char *reserved_chars_allowed,
+                                    gboolean allow_utf8);
 
 
 #define GET_RC_BOOLEAN(section, keyarg) g_key_file_get_boolean(g_opt.rcfile, section, keyarg, NULL)

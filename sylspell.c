@@ -178,57 +178,7 @@ void plugin_unload(void)
   if (g_hdll!=NULL){
       FreeLibrary(g_hdll);
   }
-  /* NOTE: in older GTK version,
-     you cant use GIO, so remove tempolary file listing by myself. */
-  gchar* path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-                            PLUGIN_DIR,G_DIR_SEPARATOR_S, SYLSPELL, NULL);
-  my_rmdir(path);
 }
-
-void my_rmdir(gchar *path)
-{
-#if 0
-  g_opt.rmlist = NULL;
-  my_rmdir_list(path);
-  guint n = 0;
-  for (n = 0;n< g_list_length(g_opt.rmlist); n++){
-    gchar *path = (gchar*)g_list_nth_data(g_opt.rmlist, n);
-    debug_print("list[%d]:%s\n", n, path);
-    if (g_file_test(path, G_FILE_TEST_IS_DIR)!=FALSE){
-      g_rmdir(path);
-    } else {
-      g_remove(path);
-    }
-  }
-  g_rmdir(path);
-#endif
-}
-
-void my_rmdir_list(gchar *dpath)
-{
-  GDir *g_dir = g_dir_open(dpath, 0, NULL);
-  gchar *path = NULL;
-#if 0
-  while ((path = (gchar*)g_dir_read_name(g_dir))!=NULL){
-    debug_print("[PLUGIN] path %s\n", path);
-    gchar* fpath = g_strconcat(dpath, G_DIR_SEPARATOR_S, path, NULL);
-    if (g_file_test(fpath, G_FILE_TEST_IS_DIR)!=FALSE){
-#if DEBUG
-      debug_print("[PLUGIN] remove dir %s\n", fpath);
-#endif
-      my_rmdir_list(fpath);
-      g_opt.rmlist = g_list_append(g_opt.rmlist, fpath);
-    }else {
-#if DEBUG
-      debug_print("[PLUGIN] remove %s\n", fpath);
-#endif
-      g_opt.rmlist = g_list_append(g_opt.rmlist, fpath);
-    }
-  }
-#endif
-  g_dir_close(g_dir);
-}
-
 
 SylPluginInfo *plugin_info(void)
 {
@@ -438,22 +388,33 @@ void check_mailcontent_cb(GObject *obj, gpointer data)
     gchar *buf = gtk_text_buffer_get_text(buffer,&tsiter, &teiter, FALSE);
     
     com = g_strdup_printf("curl --verbose --data 'appid=%s' --data 'sentence=%s' %s",
-                          appid, encode_uri(buf), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
-#if 0
-    com = g_strdup_printf("curl --data 'appid=%s' --data 'sentence=%s' %s",
-                          appid, encode_url(buf), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
-#endif
-    debug_print("UTF-8:%s\n", buf);
-    gchar *uri = g_filename_to_uri(buf, NULL, NULL);
-    if (uri) {
-      debug_print("UTF-8:%s\n", uri);
-    }
-    debug_print("curl command:%s\n", com);
+                          appid, my_g_uri_escape_string(buf, NULL, FALSE), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
 
-#if 0
+    debug_print("UTF-8:%s\n", buf);
+    
     gchar *result = get_command_output(com);
     debug_print("result:%s\n", result);
-#endif  
+  }
+}
+
+void test_btn_cb(GObject *obj, gpointer data)
+{
+  debug_print("[PLUGIN] test_btn_cb is called.\n");
+
+  GtkWidget *widget = (GtkWidget*)data;
+  gchar *buf = gtk_entry_get_text(GTK_ENTRY(widget));
+  gchar *appid = gtk_entry_get_text(GTK_ENTRY(g_opt.jlp_kousei_appid));
+  
+  debug_print("buf:%s\n", buf);
+  debug_print("appid:%s\n", appid);
+
+  if (buf != NULL && appid != NULL) {
+      gchar *com = g_strdup_printf("curl --verbose --data 'appid=%s' --data 'sentence=%s' %s",
+                                   appid, my_g_uri_escape_string(buf, NULL, FALSE), "http://jlp.yahooapis.jp/KouseiService/V1/kousei");
+      debug_print("UTF-8:%s\n", com);
+
+      gchar *result = get_command_output(com);
+      debug_print("result:%s\n", result);
   }
 }
 
@@ -547,7 +508,7 @@ static gboolean compose_send_cb(GObject *obj, gpointer data,
   /* get password candidate from text */
   gchar *msg=NULL;
 
-  gboolean bcancel = TRUE;
+  gboolean bcancel = FALSE;
   g_print("compose_send_cb:%s\n", bcancel ? "TRUE" : "FALSE");
   return bcancel;
 }
@@ -563,25 +524,15 @@ static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey)
   }
   GtkWidget *vbox = gtk_vbox_new(FALSE, 6);
 
-  GtkWidget *startup_align = gtk_alignment_new(0, 0, 1, 1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(startup_align), ALIGN_TOP, ALIGN_BOTTOM, ALIGN_LEFT, ALIGN_RIGHT);
-
-  GtkWidget *startup_frm = gtk_frame_new(_("Startup Option"));
-  GtkWidget *startup_frm_align = gtk_alignment_new(0, 0, 1, 1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(startup_frm_align), ALIGN_TOP, ALIGN_BOTTOM, ALIGN_LEFT, ALIGN_RIGHT);
+  GtkWidget *common_align = NULL;
+  GtkWidget *vbox_common = NULL;
+  create_config_myframe(&common_align, &vbox_common, _("Option"));
 
   g_opt.startup = gtk_check_button_new_with_label(_("Enable plugin on startup."));
-  gtk_box_pack_start(GTK_BOX(vbox), g_opt.startup, FALSE, FALSE, 0);
-
-  g_opt.startup = gtk_check_button_new_with_label(_("Enable loading dictionary on startup."));
-  gtk_box_pack_start(GTK_BOX(vbox), g_opt.startup, FALSE, FALSE, 0);
-
   g_opt.send = gtk_check_button_new_with_label(_("Enable spell checking before sending mail."));
-  gtk_box_pack_start(GTK_BOX(vbox), g_opt.send, FALSE, FALSE, 0);
 
-  GtkWidget *general_lbl = gtk_label_new(_("General"));
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, general_lbl);
-  gtk_widget_show_all(notebook);
+  gtk_box_pack_start(GTK_BOX(vbox_common), g_opt.startup, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox_common), g_opt.send, FALSE, FALSE, 0);
 
   gboolean flg=g_key_file_get_boolean(pkey, SYLSPELL, "startup", NULL);
   debug_print("startup:%s\n", flg ? "TRUE" : "FALSE");
@@ -590,25 +541,20 @@ static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey)
   }
 
   /* Application */
-  GtkWidget *app_align = gtk_alignment_new(0, 0, 1, 1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(app_align), ALIGN_TOP, ALIGN_BOTTOM, ALIGN_LEFT, ALIGN_RIGHT);
-
-  GtkWidget *app_frm = gtk_frame_new(_("Application/Service"));
-  GtkWidget *app_frm_align = gtk_alignment_new(0, 0, 1, 1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(app_frm_align), ALIGN_TOP, ALIGN_BOTTOM, ALIGN_LEFT, ALIGN_RIGHT);
+  GtkWidget *app_align = NULL;
+  GtkWidget *vbox_app = NULL;
+  create_config_myframe(&app_align, &vbox_app, _("Application/Service"));
 
   g_opt.hunspell = gtk_radio_button_new_with_label(NULL, _("Hunspell"));
   g_opt.aspell = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (g_opt.hunspell), _("Aspell"));
-  g_opt.jlp_kousei = gtk_radio_button_new_with_label(NULL, _("Yahoo! JAPAN Kousei"));
+  g_opt.jlp_kousei = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON (g_opt.hunspell), _("Yahoo! JAPAN Kousei"));
 
-  GtkWidget *vbox_app = gtk_vbox_new(FALSE, BOX_SPACE);
   gtk_box_pack_start(GTK_BOX(vbox_app), g_opt.hunspell, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(vbox_app), g_opt.aspell, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(vbox_app), g_opt.jlp_kousei, FALSE, FALSE, 0);
 
-  gtk_container_add(GTK_CONTAINER(app_frm_align), vbox_app);
-  gtk_container_add(GTK_CONTAINER(app_frm), app_frm_align);
-  gtk_container_add(GTK_CONTAINER(app_align), app_frm);
+  gtk_box_pack_start(GTK_BOX(vbox), common_align, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), app_align, FALSE, FALSE, 0);
 
   flg=g_key_file_get_boolean(pkey, SYLSPELL, "send", NULL);
   debug_print("send:%s\n", flg ? "TRUE" : "FALSE");
@@ -624,6 +570,10 @@ static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey)
   }
 #endif
   
+  GtkWidget *general_lbl = gtk_label_new(_("General"));
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, general_lbl);
+  gtk_widget_show_all(notebook);
+
   return NULL;
 }
 
@@ -726,9 +676,28 @@ static GtkWidget *create_config_jlp_kousei_page(GtkWidget *notebook, GKeyFile *p
   }
 #endif
 
+  /* test */
+  GtkWidget *test_align = NULL;
+  GtkWidget *vbox_test = NULL;
+  create_config_myframe(&test_align, &vbox_test, _("Test"));
+  GtkWidget *test_entry = gtk_entry_new();
+  GtkWidget *test_box = gtk_hbox_new(FALSE, BOX_SPACE);
+  GtkWidget *test_lbl = gtk_label_new(_("Test:"));
+  GtkWidget *test_btn = gtk_button_new_from_stock(GTK_STOCK_SPELL_CHECK);
+  gtk_box_pack_start(GTK_BOX(test_box), test_lbl, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(test_box), test_entry, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(test_box), test_btn, FALSE, FALSE, 0);
+  
+  gtk_box_pack_start(GTK_BOX(vbox_test), test_box, FALSE, FALSE, 0);
+
+  g_signal_connect(G_OBJECT(test_btn), "clicked",
+                   G_CALLBACK(test_btn_cb), test_entry);
+
+  
   gtk_box_pack_start(GTK_BOX(vbox), app_align, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), grp_align, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), nofil_align, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), test_align, FALSE, FALSE, 0);
   
 
   gchar *appid = g_key_file_get_string(g_opt.rcfile, SYLSPELL_JLP_KOUSEI, "appid", NULL);
@@ -880,4 +849,39 @@ static gboolean textview_motion_notify(GtkWidget *widget,
     gdk_window_get_pointer(widget->window, NULL, NULL, NULL);
 
 	return FALSE;
+}
+
+static char *my_g_uri_escape_string(const char *unescaped,
+                                    const char *reserved_chars_allowed,
+                                    gboolean allow_utf8)
+{
+    debug_print("[PLUGIN] my_g_uri_escape_string is called.");
+    
+    gint index = 0;
+    char *src = "";
+    char *dest = src;
+
+#if DEBUG
+    debug_print("[PLUGIN] unescaped length:%d\n", strlen(unescaped));
+#endif
+    
+    while(index < strlen(unescaped)) {
+        int ch = (unsigned char)(unescaped[index]);
+#if DEBUG
+        debug_print("[PLUGIN] unescaped[%d] :%d 0x%04x\n", index, unescaped[index], unescaped[index]);
+#endif
+        if(g_ascii_isalnum(ch) || ch == '.' ||ch == '-' || ch == '_') {
+            dest = g_strdup_printf("%s%c", src, (unsigned char)ch);
+        } else if(ch == ' ') {
+            dest = g_strdup_printf("%s+", src);
+        } else {
+            dest = g_strdup_printf("%s%%%02X", src, ch);
+        }
+#if DEBUG
+        debug_print("[PLUGIN] my_g_uri_escape_string dest:%s\n", dest);
+#endif
+        index++;
+        g_free(src);
+    }
+    return dest;
 }
