@@ -33,8 +33,8 @@
 #include "alertpanel.h"
 #include "compose.h"
 
-#include "tools-check-spelling.xpm"
-#include "tools-check-spelling-off.xpm"
+#include "../res/tools-check-spelling.xpm"
+#include "../res/tools-check-spelling-off.xpm"
 
 #include <glib/gi18n-lib.h>
 #include <locale.h>

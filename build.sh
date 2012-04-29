@@ -1,8 +1,7 @@
 
 NAME=sylspell
-TARGET=$NAME.dll
-OBJS="$NAME.o"
-OBJS="$NAME.o version.o"
+TARGET=src/$NAME.dll
+OBJS="src/$NAME.o src/version.o"
 PKG=sylpheed-$NAME
 LIBSYLPH=./lib/libsylph-0-1.a
 LIBSYLPHEED=./lib/libsylpheed-plugin-0-1.a
@@ -18,25 +17,28 @@ MAJOR=0
 MINOR=1
 SUBMINOR=0
 
+DCOMPILE=src/.compile
+PBUILDH=src/private_build.h
+
 function compile ()
 {
-    if [ ! -f "private_build.h" ]; then
-        echo "1" > .compile
-        echo "#define PRIVATE_BUILD 1" > private_build.h
+    if [ ! -f "$PBUILDH" ]; then
+        echo "1" > $DCOMPILE
+        echo "#define PRIVATE_BUILD 1" > $PBUILDH
     else
-        ret=`cat .compile | gawk '{print $i+1}'`
-        echo $ret | tee .compile
-        echo "#define PRIVATE_BUILD \"build $ret\\0\"" > private_build.h
-        echo "#define NAME \"SylNotify\\0\"" >> private_build.h
-        echo "#define VERSION \"$MAJOR, $MINOR, $SUBMINOR, 0\\0\"" >> private_build.h
-        echo "#define NAMEVERSION \"SylNotify $MAJOR.$MINOR.$SUBMINOR\\0\"" >> private_build.h
-        echo "#define QVERSION \"$MAJOR,$MINOR,$SUBMINOR,0\"" >> private_build.h
+        ret=`cat $DCOMPILE | gawk '{print $i+1}'`
+        echo $ret | tee $DCOMPILE
+        echo "#define PRIVATE_BUILD \"build $ret\\0\"" > $PBUILDH
+        echo "#define NAME \"SylNotify\\0\"" >> $PBUILDH
+        echo "#define VERSION \"$MAJOR, $MINOR, $SUBMINOR, 0\\0\"" >> $PBUILDH
+        echo "#define NAMEVERSION \"SylNotify $MAJOR.$MINOR.$SUBMINOR\\0\"" >> $PBUILDH
+        echo "#define QVERSION \"$MAJOR,$MINOR,$SUBMINOR,0\"" >> $PBUILDH
     fi
-    com="windres -i version.rc -o version.o"
+    com="windres -i res/version.rc -o src/version.o"
     echo $com
     eval $com
 
-    com="gcc -Wall -c $DEF $INC $NAME.c"
+    com="gcc -Wall -c -o src/$NAME.o $DEF $INC src/$NAME.c"
     echo $com
     eval $com
     if [ $? != 0 ]; then
