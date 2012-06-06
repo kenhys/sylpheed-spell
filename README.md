@@ -13,8 +13,8 @@ Requirement
 Install
 --------------------------------------------------------------------------------
 
-1) copy sylnotify.dll to Sylpheed plugin directory.
-2) copy sylnotify.mo to lib/locale/ja/LC_MESSAGES directory. (for Japanese users)
+1) copy sylspell.dll to Sylpheed plugin directory.
+2) copy sylspell.mo to lib/locale/ja/LC_MESSAGES directory. (for Japanese users)
    
 Usage
 --------------------------------------------------------------------------------
