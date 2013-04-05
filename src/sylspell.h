@@ -115,16 +115,11 @@ static void command_path_clicked(GtkWidget *widget, gpointer data);
 static void inc_start_cb(GObject *obj, PrefsAccount *ac);
 static void inc_finished_cb(GObject *obj, gint new_messages);
 
-static void exec_sylspell_cb(GObject *obj, FolderItem *item, const gchar *file, guint num);
-static void exec_sylspell_menu_cb(void);
-static void exec_sylspell_onoff_cb(void);
 static void compose_created_cb(GObject *obj, gpointer compose);
 static void compose_destroy_cb(GObject *obj, gpointer compose);
 static gboolean compose_send_cb(GObject *obj, gpointer compose,
                                 gint compose_mode, gint send_mode,
                                 const gchar *msg_file, GSList *to_list);
-static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey);
-static GtkWidget *create_config_about_page(GtkWidget *notebook, GKeyFile *pkey);
 
 void check_attachement_cb(GObject *obj, gpointer data);
 
