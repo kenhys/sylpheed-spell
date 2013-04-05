@@ -15,9 +15,6 @@
 #define SYLSPELL_JLP_KOUSEI "jlp_kousei"
 #define SYLSPELLRC "sylspellrc"
 
-#define _(String) dgettext("sylspell", String)
-#define N_(String) gettext_noop(String)
-#define gettext_noop(String) (String)
 
 #define PLUGIN_NAME N_("Sylspell - spell check plug-in for Sylpheed")
 #define PLUGIN_DESC N_("spell check plug-in for Sylpheed")
