@@ -43,8 +43,6 @@ static GtkWidget *g_plugin_off = NULL;
 static GtkWidget *g_onoff_switch = NULL;
 static GtkTooltips *g_tooltip = NULL;
 
-static HANDLE g_hdll = NULL;
-
 static SylSpellOption g_opt;
 
 static gchar* g_copyright = N_("SylSpell is distributed under 2-Clause BSD license.\n"
@@ -137,22 +135,6 @@ void plugin_load(void)
                            _("SylSpell is enabled. Click the icon to disable plugin."),
                            NULL);
 
-#if 0
-      if (g_hdll){
-        gtk_widget_hide(g_plugin_off);
-        gtk_widget_show(g_plugin_on);
-        gtk_tooltips_set_tip
-          (g_tooltip, g_onoff_switch,
-           _("SylSpell is enabled."),
-           NULL);
-      }else {
-        gtk_widget_hide(g_plugin_on);
-        gtk_widget_show(g_plugin_off);
-        gtk_tooltips_set_tip
-          (g_tooltip, g_onoff_switch, _("SylSpell is disabled."), NULL);
-      }
-#endif
-
 
     }
         
@@ -169,9 +151,6 @@ void plugin_load(void)
 void plugin_unload(void)
 {
   debug_print("sylspell_tool plug-in unloaded.\n");
-  if (g_hdll!=NULL){
-      FreeLibrary(g_hdll);
-  }
 }
 
 SylPluginInfo *plugin_info(void)
@@ -823,7 +802,7 @@ static gboolean textview_motion_notify(GtkWidget *widget,
     gchar *text;
     gint px, py;
     gint x, y;
-    GtkTextIter iter, cur,start, end;
+    GtkTextIter iter, start, end;
  
     if (gtk_text_view_get_window(GTK_TEXT_VIEW(widget), GTK_TEXT_WINDOW_TEXT) != event->window)
       return FALSE;
