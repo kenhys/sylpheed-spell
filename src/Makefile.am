@@ -1,7 +1,5 @@
 lib_LTLIBRARIES = sylspell.la
 
-sylpf_srcdir = $(top_srcdir)/../sylplugin_factory/src
-
 sylspell_la_SOURCES = sylspell.c sylspell.h
 sylspell_la_LDFLAGS = -module -no-undefined -avoid-version
 
@@ -11,7 +9,7 @@ INCLUDES = \
 	-I$(sylpheed_build_dir) \
 	-I$(sylpheed_build_dir)/libsylph \
 	-I$(sylpheed_build_dir)/src \
-	-I$(sylpf_srcdir)
+	-I$(sylplugin_factory_source_dir)/src
 
 sylspell_la_LIBADD = \
 	$(GTK_LIBS) \
