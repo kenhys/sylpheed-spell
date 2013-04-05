@@ -177,7 +177,7 @@ gint plugin_interface_version(void)
 
 static void prefs_ok_cb(GtkWidget *widget, gpointer data)
 {
-  gchar *appid;
+  const gchar *appid;
   gsize sz;
   gchar *buf;
 
@@ -385,8 +385,8 @@ void check_mailcontent_cb(GObject *obj, gpointer data)
 void test_btn_cb(GObject *obj, gpointer data)
 {
   GtkWidget *widget = (GtkWidget*)data;
-  gchar *buf = gtk_entry_get_text(GTK_ENTRY(widget));
-  gchar *appid = gtk_entry_get_text(GTK_ENTRY(g_opt.jlp_kousei_appid));
+  const gchar *buf = gtk_entry_get_text(GTK_ENTRY(widget));
+  const gchar *appid = gtk_entry_get_text(GTK_ENTRY(g_opt.jlp_kousei_appid));
   gchar *com;
   gchar *result;
 
@@ -505,7 +505,8 @@ static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey)
   gboolean flg;
   GtkWidget *app_align = NULL;
   GtkWidget *vbox_app = NULL;
-
+  GtkWidget *label;
+  
   debug_print("[PLUGIN] create_config_main_page\n");
   if (notebook == NULL){
     return NULL;
@@ -748,6 +749,7 @@ static gboolean create_config_myframe (GtkWidget **app_align, GtkWidget **vbox_a
   gtk_container_add(GTK_CONTAINER(app_frm_align), *vbox_app);
   gtk_container_add(GTK_CONTAINER(app_frm), app_frm_align);
   gtk_container_add(GTK_CONTAINER(*app_align), app_frm);
+  return TRUE;
 }
 
 /* about, copyright tab */
