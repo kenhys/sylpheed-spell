@@ -797,6 +797,7 @@ GtkWidget *g_popup = NULL;
 gint g_popx, g_popy;
 GtkWidget *g_label =NULL;
 
+#if 0
 static gboolean textview_motion_notify(GtkWidget *widget,
                                        GdkEventMotion *event,
                                        GtkTextView *textview)
@@ -861,6 +862,7 @@ static gboolean textview_motion_notify(GtkWidget *widget,
 
     return FALSE;
 }
+#endif
 
 static char *my_g_uri_escape_string(const char *unescaped,
                                     const char *reserved_chars_allowed,
