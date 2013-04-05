@@ -95,25 +95,15 @@ struct _SylSpellOption {
 
 typedef struct _SylSpellOption SylSpellOption;
 
-static void init_done_cb(GObject *obj, gpointer data);
-static void app_exit_cb(GObject *obj, gpointer data);
-static void app_force_exit_cb(GObject *obj, gpointer data);
 
-static gchar *myprocmsg_get_message_file_path(MsgInfo *msginfo);
 static void prefs_ok_cb(GtkWidget *widget, gpointer data);
 
-static void exec_sylspell_cb(GObject *obj, FolderItem *item, const gchar *file, guint num);
 static void exec_sylspell_menu_cb(void);
 static void exec_sylspell_onoff_cb(void);
 static GtkWidget *create_config_main_page(GtkWidget *notebook, GKeyFile *pkey);
 static GtkWidget *create_config_jlp_kousei_page(GtkWidget *notebook, GKeyFile *pkey);
-static GtkWidget *create_config_snarl_page(GtkWidget *notebook, GKeyFile *pkey);
-static GtkWidget *create_config_growl_page(GtkWidget *notebook, GKeyFile *pkey);
 static GtkWidget *create_config_about_page(GtkWidget *notebook, GKeyFile *pkey);
 
-static void command_path_clicked(GtkWidget *widget, gpointer data);
-static void inc_start_cb(GObject *obj, PrefsAccount *ac);
-static void inc_finished_cb(GObject *obj, gint new_messages);
 
 static void compose_created_cb(GObject *obj, gpointer compose);
 static void compose_destroy_cb(GObject *obj, gpointer compose);
@@ -125,7 +115,6 @@ void check_attachement_cb(GObject *obj, gpointer data);
 
 void my_rmdir(gchar *path);
 void my_rmdir_list(gchar *path);
-static gint extract_attachment(AttachInfo *ainfo, gchar *dest, gchar *passwd);
 void check_mailcontent_cb(GObject *obj, gpointer data);
 static gboolean create_config_myframe (GtkWidget **app_align, GtkWidget **vbox_app, gchar *title);
 static char *my_g_uri_escape_string(const char *unescaped,
