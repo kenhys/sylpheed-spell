@@ -7,7 +7,7 @@ Requirement
 --------------------------------------------------------------------------------
 
 * Windows XP SP3/Windows 7 SP1
-
+* Ubuntu 12.04 or later
 * Sylpheed 3.1.2 or later
 
 Install
