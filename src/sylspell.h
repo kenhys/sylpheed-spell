@@ -25,6 +25,13 @@ struct _SylSpellOption {
   /* rcfile */
   GKeyFile *rcfile;
 
+  GtkWidget *plugin_on;
+  GtkWidget *plugin_off;
+  GtkWidget *plugin_switch;
+  GtkTooltips *plugin_tooltip;
+
+  gboolean plugin_enabled;
+
   gboolean startup_flg;
   gboolean send_flg;
 
