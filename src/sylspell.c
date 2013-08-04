@@ -24,6 +24,9 @@
 #include <glib/gi18n-lib.h>
 #include <locale.h>
 
+#define PLUGIN_NAME N_("Sylspell - spell check plug-in for Sylpheed")
+#define PLUGIN_DESC N_("spell check plug-in for Sylpheed")
+
 #include "sylplugin_factory.h"
 #include "sylspell.h"
 
@@ -34,9 +37,6 @@ static SylPluginInfo info = {
     N_(PLUGIN_DESC)
 };
 
-
-#define PLUGIN_NAME N_("Sylspell - spell check plug-in for Sylpheed")
-#define PLUGIN_DESC N_("spell check plug-in for Sylpheed")
 
 static gboolean g_enable = FALSE;
 
