@@ -15,10 +15,6 @@
 #define SYLSPELL_JLP_KOUSEI "jlp_kousei"
 #define SYLSPELLRC "sylspellrc"
 
-
-#define PLUGIN_NAME N_("Sylspell - spell check plug-in for Sylpheed")
-#define PLUGIN_DESC N_("spell check plug-in for Sylpheed")
-
 struct _SylSpellOption {
   /* full path to ghostbiffrc*/
   gchar *rcpath;

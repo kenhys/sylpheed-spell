@@ -35,6 +35,8 @@ static SylPluginInfo info = {
 };
 
 
+#define PLUGIN_NAME N_("Sylspell - spell check plug-in for Sylpheed")
+#define PLUGIN_DESC N_("spell check plug-in for Sylpheed")
 
 static gboolean g_enable = FALSE;
 
